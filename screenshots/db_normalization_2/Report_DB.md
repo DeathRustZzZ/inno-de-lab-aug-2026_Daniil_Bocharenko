@@ -65,7 +65,7 @@ CHECK (version >= 0)
 | `phone_number`        | `VARCHAR(20)`         |   —    | —                                         | Номер телефона           |
 | `verification_status` | `verification_status` |   —    | `NOT NULL`                                | Статус подтверждения     |
 | `verified_at`         | `TIMESTAMPTZ`         |   —    | —                                         | Время подтверждения      |
-| `aggregate_version`   | `BIGINT`              |   —    | —                                         | Версия контактных данных |
+| `aggregate_version`   | `BIGINT`              |   —    | `NOT NULL`                                | Версия контактных данных |
 
 `customer_id` одновременно является первичным и внешним ключом. Благодаря этому одному клиенту не может соответствовать более одной записи `customer_contact_books`.
 
@@ -76,6 +76,14 @@ PRIMARY KEY (customer_id)
 
 FOREIGN KEY (customer_id)
     REFERENCES customers(id)
+
+CHECK (
+    (verification_status = 'verified' AND verified_at IS NOT NULL)
+    OR
+    (verification_status = 'unverified' AND verified_at IS NULL)
+)
+
+CHECK (aggregate_version >= 0)
 ```
 
 #### 2.2.3. Таблица `vehicles`
@@ -170,7 +178,7 @@ WHERE status IN ('pending_verification', 'active');
 
 #### Customers — Customer Contact Books
 
-**Тип связи:** один-к-одному (`1 : 1`).
+**Тип связи:** один-к-одному или один-к-нулю (`1 :0..1`).
 
 Один клиент может иметь одну запись контактной информации. Каждая запись контактной информации относится к одному клиенту. Поскольку `customer_id` одновременно является PK, создать две контактные книги одному клиенту невозможно.
 
