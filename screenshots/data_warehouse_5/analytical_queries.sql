@@ -19,6 +19,7 @@ SELECT
     ROUND(AVG(duration_days), 2) AS avg_duration_days
 FROM fact_vehicle_ownership
 WHERE is_current = 0;
+  AND duration_days IS NOT NULL;
 
 -- 4. Количество владений по маркам автомобилей
 SELECT
@@ -30,7 +31,7 @@ JOIN dim_vehicle AS v
 GROUP BY v.brand
 ORDER BY total_ownerships DESC;
 
--- 5. Распределение владений по типам автомобилей
+-- 5. Распределение владений по типам
 SELECT
     ownership_type,
     SUM(ownership_count) AS total_ownerships
