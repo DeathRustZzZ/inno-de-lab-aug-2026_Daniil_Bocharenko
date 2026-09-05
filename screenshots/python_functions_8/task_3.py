@@ -8,6 +8,7 @@ def calculate_overdue_fine(
     days_overdue: Any,
     fine_rate: float,
 ) -> tuple[float, float] | None:
+    # Всю документацию правил через ИИ решил оставить английский для отмосферы международного проекта
     """Calculate the overdue fine and return index for a movie.
 
     Handles invalid data types, invalid values, and division by zero.
