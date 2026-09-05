@@ -7,6 +7,7 @@ TIME_DECIMALS = 8
 
 
 def performance_logger(func: Callable[..., Any]) -> Callable[..., Any]:
+    # Всю документацию правил через ИИ решил оставить английский для отмосферы международного проекта
     """Measure and log the execution time of a function.
 
     Args:
