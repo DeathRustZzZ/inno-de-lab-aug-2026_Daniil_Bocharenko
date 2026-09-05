@@ -6,6 +6,7 @@ def calculate_rental_batch(
     rental_rate: float,
     discount: float = 0.0,
 ) -> tuple[float, bool]:
+    # Всю документацию правил через ИИ решил оставить английский для отмосферы международного проекта
     """Calculate the final cost of a rental batch.
 
     Args:
